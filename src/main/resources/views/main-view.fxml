@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.6"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.filemanagerapp.controller.MainController">
+
+    <!-- Barra Superior -->
+    <top>
+        <HBox spacing="10" style="-fx-padding: 10; -fx-background-color: #2C3E50;">
+            <Label text="📂 File Manager" style="-fx-text-fill: white; -fx-font-size: 18px;" />
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Refresh" fx:id="btnRefresh"/>
+            <Button text="Upload" fx:id="uploadButton"/>
+            <Button text="Delete" fx:id="btnDelete"/>
+        </HBox>
+    </top>
+
+    <!-- Panel Lateral -->
+    <left>
+        <VBox style="-fx-padding: 10; -fx-background-color: #ECF0F1;">
+            <Label text="📁 Directorios" style="-fx-font-size: 14px;"/>
+            <TreeView fx:id="treeViewFolders"/>
+            <ComboBox fx:id="menuComboBox">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Opción 1"/>
+                        <String fx:value="Opción 2"/>
+                        <String fx:value="Opción 3"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+        </VBox>
+    </left>
+
+    <!-- Vista Principal -->
+    <center>
+        <TableView fx:id="tableViewFiles">
+            <columns>
+                <TableColumn text="Nombre" fx:id="colName" />
+                <TableColumn text="Tamaño" fx:id="colSize" />
+                <TableColumn text="Última Modificación" fx:id="colDate" />
+            </columns>
+        </TableView>
+    </center>
+
+    <!-- Pie de Página -->
+    <bottom>
+        <HBox spacing="10" style="-fx-padding: 10; -fx-background-color: #BDC3C7;">
+            <Label text="Archivo seleccionado:"/>
+            <Label fx:id="lblSelectedFile"/>
+        </HBox>
+    </bottom>
+
+    <HBox spacing="10">
+        <TextField fx:id="searchField" promptText="Buscar..."/>
+        <Button fx:id="searchButton" text="Buscar"/>
+    </HBox>
+
+</BorderPane>
