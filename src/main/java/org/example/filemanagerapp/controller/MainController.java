@@ -1,10 +1,13 @@
 package org.example.filemanagerapp.controller;
 
 import javafx.fxml.FXML;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 import java.io.File;
 
 public class MainController {
@@ -16,9 +19,15 @@ public class MainController {
     private Label lblArchivoSeleccionado;
 
     @FXML
-    private void buscarArchivo() {
+    private ListView<String> fileListView;
+
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private void openFile() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleccionar Archivo");
+        fileChooser.setTitle("Abrir Archivo");
 
         // Filtros opcionales (Ej: solo archivos de texto y PDF)
         fileChooser.getExtensionFilters().addAll(
@@ -36,6 +45,23 @@ public class MainController {
             lblArchivoSeleccionado.setText(archivoSeleccionado.getAbsolutePath());
         } else {
             lblArchivoSeleccionado.setText("Ningún archivo seleccionado");
+        }
+    }
+
+    @FXML
+    private void saveFile() {
+        // Lógica para guardar archivos (puedes implementarla más adelante)
+        System.out.println("Guardar archivo...");
+    }
+
+    @FXML
+    private void buscarArchivo() {
+        String searchTerm = searchField.getText();
+        if (!searchTerm.isEmpty()) {
+            // Lógica para buscar archivos (puedes implementarla más adelante)
+            System.out.println("Buscando archivos con el término: " + searchTerm);
+        } else {
+            lblArchivoSeleccionado.setText("Ingresa un término de búsqueda.");
         }
     }
 }
