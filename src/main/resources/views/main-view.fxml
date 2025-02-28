@@ -2,29 +2,25 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.filemanagerapp.controller.MainController">
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.filemanagerapp.controller.MainController"
+      stylesheets="@../styles.css" spacing="10" style="-fx-padding: 20;">
 
-    <!-- Sección superior (barra de herramientas) -->
-    <top>
-        <HBox spacing="10" style="-fx-padding: 10;">
-            <Button text="Abrir" onAction="#openFile"/>
-            <Button text="Guardar" onAction="#saveFile"/>
-            <TextField fx:id="searchField" promptText="Buscar archivo..."/>
-            <Button fx:id="btnBuscarArchivo" text="Buscar Archivo" onAction="#buscarArchivo"/>
-        </HBox>
-    </top>
+    <!-- Barra de herramientas -->
+    <HBox styleClass="hbox">
+        <Button text="Subir Archivo" onAction="#subirArchivo"/>
+        <Button text="Descargar Archivo" onAction="#descargarArchivo"/>
+        <Button text="Borrar Archivo" onAction="#borrarArchivo"/>
+        <TextField fx:id="searchField" promptText="Buscar archivo..."/>
+        <Button text="Buscar" onAction="#buscarArchivo"/>
+    </HBox>
 
-    <!-- Sección central (lista de archivos) -->
-    <center>
-        <ListView fx:id="fileListView"/>
-    </center>
+    <!-- Lista de archivos -->
+    <ListView fx:id="fileListView"/>
 
-    <!-- Sección inferior (etiqueta de estado) -->
-    <bottom>
-        <Label fx:id="lblArchivoSeleccionado" text="Ningún archivo seleccionado" style="-fx-padding: 10;"/>
-    </bottom>
-
-</BorderPane>
+    <!-- Etiqueta de estado -->
+    <Label fx:id="statusLabel" text="Listo."/>
+</VBox>

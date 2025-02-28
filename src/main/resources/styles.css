@@ -1,0 +1,30 @@
+/* Estilo para el VBox del login */
+.vbox {
+    -fx-background-color: #ffffff; /* Fondo blanco */
+    -fx-padding: 20px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0, 0, 0); /* Sombra suave */
+}
+
+/* Estilo para los campos de texto */
+.text-field, .password-field {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+    -fx-padding: 8px;
+}
+
+/* Estilo para el botón de inicio de sesión */
+.button {
+    -fx-background-color: #0078d7; /* Azul moderno */
+    -fx-text-fill: white; /* Texto blanco */
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #005bb5; /* Azul más oscuro al pasar el mouse */
+}

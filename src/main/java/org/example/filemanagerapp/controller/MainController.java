@@ -1,22 +1,16 @@
 package org.example.filemanagerapp.controller;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainController {
-
-    @FXML
-    private Button btnBuscarArchivo;
-
-    @FXML
-    private Label lblArchivoSeleccionado;
 
     @FXML
     private ListView<String> fileListView;
@@ -25,43 +19,79 @@ public class MainController {
     private TextField searchField;
 
     @FXML
-    private void openFile() {
+    private Label statusLabel;
+
+    private List<File> archivos = new ArrayList<>();
+    private Stage stage;
+
+    // Método para recibir el Stage
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    @FXML
+    private void subirArchivo() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Abrir Archivo");
+        fileChooser.setTitle("Seleccionar Archivos para Subir");
+        List<File> archivosSeleccionados = fileChooser.showOpenMultipleDialog(stage);
 
-        // Filtros opcionales (Ej: solo archivos de texto y PDF)
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Todos los archivos", "*.*"),
-                new FileChooser.ExtensionFilter("Archivos de texto", "*.txt"),
-                new FileChooser.ExtensionFilter("Archivos PDF", "*.pdf")
-        );
-
-        // Mostrar el cuadro de diálogo
-        Stage stage = (Stage) btnBuscarArchivo.getScene().getWindow();
-        File archivoSeleccionado = fileChooser.showOpenDialog(stage);
-
-        // Si se selecciona un archivo, mostrar la ruta en la etiqueta
-        if (archivoSeleccionado != null) {
-            lblArchivoSeleccionado.setText(archivoSeleccionado.getAbsolutePath());
-        } else {
-            lblArchivoSeleccionado.setText("Ningún archivo seleccionado");
+        if (archivosSeleccionados != null) {
+            archivos.addAll(archivosSeleccionados);
+            actualizarListaArchivos();
+            statusLabel.setText(archivosSeleccionados.size() + " archivos subidos.");
         }
     }
 
     @FXML
-    private void saveFile() {
-        // Lógica para guardar archivos (puedes implementarla más adelante)
-        System.out.println("Guardar archivo...");
+    private void descargarArchivo() {
+        String archivoSeleccionado = fileListView.getSelectionModel().getSelectedItem();
+        if (archivoSeleccionado != null) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Guardar Archivo");
+            File destino = fileChooser.showSaveDialog(stage);
+
+            if (destino != null) {
+                // Lógica para copiar el archivo seleccionado al destino
+                statusLabel.setText("Archivo descargado: " + archivoSeleccionado);
+            }
+        } else {
+            statusLabel.setText("Selecciona un archivo para descargar.");
+        }
+    }
+
+    @FXML
+    private void borrarArchivo() {
+        ObservableList<String> seleccionados = fileListView.getSelectionModel().getSelectedItems();
+        if (!seleccionados.isEmpty()) {
+            archivos.removeIf(file -> seleccionados.contains(file.getName()));
+            actualizarListaArchivos();
+            statusLabel.setText(seleccionados.size() + " archivos borrados.");
+        } else {
+            statusLabel.setText("Selecciona al menos un archivo para borrar.");
+        }
     }
 
     @FXML
     private void buscarArchivo() {
         String searchTerm = searchField.getText();
         if (!searchTerm.isEmpty()) {
-            // Lógica para buscar archivos (puedes implementarla más adelante)
-            System.out.println("Buscando archivos con el término: " + searchTerm);
+            fileListView.getItems().clear();
+            for (File file : archivos) {
+                if (file.getName().toLowerCase().contains(searchTerm.toLowerCase())) {
+                    fileListView.getItems().add(file.getName());
+                }
+            }
+            statusLabel.setText("Búsqueda completada.");
         } else {
-            lblArchivoSeleccionado.setText("Ingresa un término de búsqueda.");
+            actualizarListaArchivos();
+            statusLabel.setText("Ingresa un término de búsqueda.");
+        }
+    }
+
+    private void actualizarListaArchivos() {
+        fileListView.getItems().clear();
+        for (File file : archivos) {
+            fileListView.getItems().add(file.getName());
         }
     }
 }

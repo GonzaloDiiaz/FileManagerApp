@@ -5,19 +5,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.example.filemanagerapp.controller.LoginController;
 
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Cargar el archivo FXML
-        Parent root = FXMLLoader.load(getClass().getResource("/views/main-view.fxml"));
+        // Cargar la interfaz de login
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login-view.fxml"));
+        Parent root = loader.load();
+
+        // Obtener el controlador y pasarle el Stage
+        LoginController loginController = loader.getController();
+        loginController.setStage(primaryStage);
 
         // Configurar la escena
-        Scene scene = new Scene(root, 800, 600);
-
-        // Configurar la ventana
-        primaryStage.setTitle("File Manager App");
+        Scene scene = new Scene(root, 400, 300);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Login");
         primaryStage.show();
     }
 
